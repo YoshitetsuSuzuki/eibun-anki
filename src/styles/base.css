@@ -1,0 +1,237 @@
+/* ── トークン ───────────────────────────────────────────────
+   夜の書斎。深い炭の紙にインクと灯り。純黒・純白を避けて眼を守る。 */
+
+:root {
+  --bg: #12141a;
+  --bg-deep: #0b0d11;
+  --surface: #191d25;
+  --surface-2: #1f242e;
+  --surface-3: #262c38;
+  --line: #2b313d;
+  --line-soft: #232833;
+
+  --text: #e8e4da;
+  --text-dim: #9aa1ac;
+  --text-faint: #6c7481;
+
+  --amber: #e3a75b;
+  --amber-ink: #1a1206;
+  --amber-soft: rgba(227, 167, 91, 0.14);
+  --amber-line: rgba(227, 167, 91, 0.38);
+
+  --sage: #7fbfa3;
+  --sage-ink: #06140e;
+  --sage-soft: rgba(127, 191, 163, 0.14);
+  --sage-line: rgba(127, 191, 163, 0.38);
+
+  --slate: #7e8794;
+  --slate-soft: rgba(126, 135, 148, 0.14);
+  --slate-line: rgba(126, 135, 148, 0.34);
+
+  --danger: #d4796f;
+
+  --glow: rgba(227, 167, 91, 0.09);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 18px 40px -18px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 30px 60px -28px rgba(0, 0, 0, 0.9), 0 2px 0 rgba(255, 255, 255, 0.03) inset;
+
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-sm: 9px;
+
+  --serif: 'Newsreader', 'Iowan Old Style', 'Hiragino Mincho ProN', Georgia, serif;
+  --sans: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic', system-ui, sans-serif;
+
+  --measure: 46rem;
+  --grain: 0.04;
+}
+
+:root[data-theme='light'] {
+  --bg: #f2eee4;
+  --bg-deep: #e7e0d2;
+  --surface: #fbf8f1;
+  --surface-2: #f4f0e6;
+  --surface-3: #ece6d8;
+  --line: #ddd5c3;
+  --line-soft: #e6dfd0;
+
+  --text: #23262b;
+  --text-dim: #5d646f;
+  --text-faint: #8a8f99;
+
+  --amber: #a86b1c;
+  --amber-ink: #fff8ec;
+  --amber-soft: rgba(168, 107, 28, 0.12);
+  --amber-line: rgba(168, 107, 28, 0.35);
+
+  --sage: #2f7c5c;
+  --sage-ink: #f2fbf6;
+  --sage-soft: rgba(47, 124, 92, 0.12);
+  --sage-line: rgba(47, 124, 92, 0.32);
+
+  --slate: #6f7684;
+  --slate-soft: rgba(111, 118, 132, 0.12);
+  --slate-line: rgba(111, 118, 132, 0.3);
+
+  --danger: #b4453a;
+
+  --glow: rgba(168, 107, 28, 0.07);
+  --shadow-1: 0 1px 2px rgba(60, 50, 30, 0.08);
+  --shadow-2: 0 18px 36px -20px rgba(70, 58, 34, 0.35), 0 1px 3px rgba(70, 58, 34, 0.1);
+  --shadow-card: 0 30px 56px -30px rgba(70, 58, 34, 0.45), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+
+  --grain: 0.025;
+}
+
+/* ── リセット ─────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* 灯りのにじみ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -20% -20% auto -20%;
+  height: 70vh;
+  background: radial-gradient(60% 100% at 50% 0%, var(--glow), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 紙の粒子 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9;
+  opacity: var(--grain);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--amber-soft);
+}
+
+/* ── タイポグラフィ ───────────────────────────────────── */
+
+.en {
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  letter-spacing: 0.005em;
+}
+
+.num {
+  font-family: var(--serif);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: 400;
+}
+
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ── 骨格 ───────────────────────────────────────────── */
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+.shell {
+  width: min(100% - 2rem, var(--measure));
+  margin-inline: auto;
+  padding-block: 1.25rem 5rem;
+}
+
+@media (max-width: 480px) {
+  .shell {
+    width: calc(100% - 1.5rem);
+  }
+}
+
+/* ── アニメーション ───────────────────────────────────── */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.5s cubic-bezier(0.2, 0.8, 0.25, 1) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
