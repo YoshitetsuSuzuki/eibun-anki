@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react'
 import type { AppState, Card, Deck, SessionSpec, Status } from '../types'
 import { cardsOfDeck, statsOf } from '../lib/study'
+import { CardBoard } from './CardBoard'
 import { SegBar } from './SegBar'
-import { IconBack, IconPencil, IconTrash } from './Icons'
+import { IconBack, IconPencil, IconTest, IconTrash } from './Icons'
 
 type Filter = 'all' | Status
+type Tab = 'board' | 'list'
 
 type Props = {
   state: AppState
@@ -23,7 +25,7 @@ type Props = {
 const FILTERS: { key: Filter; label: string }[] = [
   { key: 'all', label: 'すべて' },
   { key: 'weak', label: '苦手' },
-  { key: 'new', label: '未学習' },
+  { key: 'new', label: 'まだ' },
   { key: 'known', label: '覚えた' },
 ]
 
@@ -42,6 +44,7 @@ export function DeckView({
   onEditCard,
   onDeleteCard,
 }: Props) {
+  const [tab, setTab] = useState<Tab>('board')
   const [filter, setFilter] = useState<Filter>('all')
   const [renaming, setRenaming] = useState(false)
   const [draftName, setDraftName] = useState(deck.name)
@@ -59,6 +62,13 @@ export function DeckView({
     if (draftName.trim() && draftName !== deck.name) onRename(deck.id, draftName)
     else setDraftName(deck.name)
   }
+
+  const testSpec: SessionSpec = {
+    deckId: deck.id,
+    statuses: filter === 'all' ? [] : [filter],
+    direction: 'ja-en',
+  }
+  const testTitle = filter === 'all' ? deck.name : `${deck.name}／${STATUS_LABEL[filter]}`
 
   return (
     <div className="shell">
@@ -103,50 +113,28 @@ export function DeckView({
           <SegBar stats={stats} />
           <div className="legend">
             <span className="legend__item">
-              <span className="legend__dot" style={{ background: 'var(--sage)' }} />
+              <span className="legend__dot" style={{ background: 'var(--mint)' }} />
               覚えた <span className="legend__num">{stats.known}</span>
             </span>
             <span className="legend__item">
-              <span className="legend__dot" style={{ background: 'var(--amber)' }} />
+              <span className="legend__dot" style={{ background: 'var(--coral)' }} />
               苦手 <span className="legend__num">{stats.weak}</span>
             </span>
             <span className="legend__item">
-              <span className="legend__dot" style={{ background: 'var(--slate)' }} />
-              未学習 <span className="legend__num">{stats.new}</span>
+              <span className="legend__dot" style={{ background: 'var(--steel)' }} />
+              まだ <span className="legend__num">{stats.new}</span>
             </span>
           </div>
-        </div>
-
-        <div className="actions">
-          <button
-            className="action-tile action-tile--accent"
-            disabled={stats.total === 0}
-            onClick={() =>
-              onStudy({ deckId: deck.id, statuses: [], direction: 'ja-en' }, deck.name)
-            }
-          >
-            <span className="action-tile__title">学習する</span>
-            <span className="action-tile__note">{stats.total} 枚をランダムに</span>
-          </button>
-          <button
-            className="action-tile"
-            disabled={stats.weak === 0}
-            onClick={() =>
-              onStudy({ deckId: deck.id, statuses: ['weak'], direction: 'ja-en' }, `${deck.name}／苦手`)
-            }
-          >
-            <span className="action-tile__title">苦手だけ</span>
-            <span className="action-tile__note">{stats.weak} 枚</span>
-          </button>
         </div>
       </section>
 
       <section className="section">
-        <div className="section__head">
-          <h2 className="section__title">カード</h2>
-          <span className="section__rule" />
-          <button className="btn btn--sm btn--ghost" onClick={() => onAddCards(deck.id)}>
-            追加
+        <div className="tabs" role="tablist" aria-label="表示の切り替え">
+          <button role="tab" aria-selected={tab === 'board'} onClick={() => setTab('board')}>
+            暗記カード
+          </button>
+          <button role="tab" aria-selected={tab === 'list'} onClick={() => setTab('list')}>
+            英文・和訳の一覧
           </button>
         </div>
 
@@ -164,11 +152,28 @@ export function DeckView({
           ))}
         </div>
 
+        <div className="deck__foot" style={{ marginTop: 0, marginBottom: '1.1rem' }}>
+          <button
+            className="btn btn--primary"
+            disabled={visible.length === 0}
+            onClick={() => onStudy(testSpec, testTitle)}
+          >
+            <IconTest />
+            この {visible.length} 枚をテスト
+          </button>
+          <span className="deck__spacer" />
+          <button className="btn btn--sm btn--ghost" onClick={() => onAddCards(deck.id)}>
+            英文を追加
+          </button>
+        </div>
+
         {visible.length === 0 ? (
           <div className="empty">
             <p className="empty__title">該当するカードはありません</p>
             <p className="empty__body">別の絞り込みをお試しください。</p>
           </div>
+        ) : tab === 'board' ? (
+          <CardBoard cards={visible} onSetStatus={onSetStatus} />
         ) : (
           <div className="deck-list">
             {visible.map((card) =>
@@ -183,7 +188,7 @@ export function DeckView({
                   }}
                 />
               ) : (
-                <article key={card.id} className="entry">
+                <article key={card.id} className="entry" data-status={card.status}>
                   <p className="entry__en en">{card.en}</p>
                   <p className="entry__ja">{card.ja}</p>
                   <div className="entry__foot">
@@ -229,11 +234,11 @@ export function DeckView({
           <h2 className="section__title">このデッキの管理</h2>
           <span className="section__rule" />
         </div>
-        <div className="deck__foot">
+        <div className="deck__foot" style={{ marginTop: 0 }}>
           <button
             className="btn btn--sm btn--ghost"
             onClick={() => {
-              if (window.confirm('このデッキの学習状況をすべて未学習に戻しますか。')) {
+              if (window.confirm('このデッキの学習状況をすべて「まだ」に戻しますか。')) {
                 onResetProgress(deck.id)
               }
             }}
@@ -270,7 +275,7 @@ function CardEditor({
   const [ja, setJa] = useState(card.ja)
 
   return (
-    <div className="entry">
+    <div className="entry" data-status={card.status}>
       <input
         className="row__en"
         value={en}

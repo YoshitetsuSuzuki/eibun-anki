@@ -3,7 +3,7 @@ import type { AppState, SessionSpec } from '../types'
 import { cardsOfDeck, statsOf } from '../lib/study'
 import { speechAvailable } from '../lib/speech'
 import { SegBar } from './SegBar'
-import { IconDownload, IconMoon, IconSun, IconUpload } from './Icons'
+import { IconDownload, IconMoon, IconSun, IconTest, IconUpload } from './Icons'
 
 type Props = {
   state: AppState
@@ -56,16 +56,16 @@ export function Home({
             <SegBar stats={stats} />
             <div className="legend">
               <span className="legend__item">
-                <span className="legend__dot" style={{ background: 'var(--sage)' }} />
+                <span className="legend__dot" style={{ background: 'var(--mint)' }} />
                 覚えた <span className="legend__num">{stats.known}</span>
               </span>
               <span className="legend__item">
-                <span className="legend__dot" style={{ background: 'var(--amber)' }} />
+                <span className="legend__dot" style={{ background: 'var(--coral)' }} />
                 苦手 <span className="legend__num">{stats.weak}</span>
               </span>
               <span className="legend__item">
-                <span className="legend__dot" style={{ background: 'var(--slate)' }} />
-                未学習 <span className="legend__num">{stats.new}</span>
+                <span className="legend__dot" style={{ background: 'var(--steel)' }} />
+                まだ <span className="legend__num">{stats.new}</span>
               </span>
             </div>
           </div>
@@ -101,7 +101,7 @@ export function Home({
               disabled={stats.total === 0}
               onClick={() => onStudy({ deckId: null, statuses: [], direction: 'ja-en' }, 'すべて')}
             >
-              全部まとめて
+              全部まとめてテスト
             </button>
           )}
         </div>
@@ -132,31 +132,33 @@ export function Home({
                   </div>
                   <SegBar stats={deckStats} thin />
                   <div className="deck__foot">
+                    <button className="btn btn--sm" onClick={() => onOpenDeck(deck.id)}>
+                      カードを開く
+                    </button>
                     <button
-                      className="btn btn--sm"
+                      className="btn btn--sm btn--ghost"
                       disabled={deckStats.total === 0}
                       onClick={() =>
                         onStudy({ deckId: deck.id, statuses: [], direction: 'ja-en' }, deck.name)
                       }
                     >
-                      学習する
-                    </button>
-                    <button
-                      className="btn btn--sm btn--amber"
-                      disabled={deckStats.weak === 0}
-                      onClick={() =>
-                        onStudy(
-                          { deckId: deck.id, statuses: ['weak'], direction: 'ja-en' },
-                          `${deck.name}／苦手`,
-                        )
-                      }
-                    >
-                      苦手 {deckStats.weak}
+                      <IconTest size={14} />
+                      テスト
                     </button>
                     <span className="deck__spacer" />
-                    <button className="btn btn--sm btn--ghost" onClick={() => onOpenDeck(deck.id)}>
-                      カード一覧
-                    </button>
+                    {deckStats.weak > 0 && (
+                      <button
+                        className="btn btn--sm btn--coral"
+                        onClick={() =>
+                          onStudy(
+                            { deckId: deck.id, statuses: ['weak'], direction: 'ja-en' },
+                            `${deck.name}／苦手`,
+                          )
+                        }
+                      >
+                        苦手 {deckStats.weak}
+                      </button>
+                    )}
                   </div>
                 </article>
               )

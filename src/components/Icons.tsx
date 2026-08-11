@@ -63,6 +63,34 @@ export function IconSwap({ size = 17 }: Props) {
   )
 }
 
+export function IconFlip({ size = 16 }: Props) {
+  return (
+    <svg {...base(size)}>
+      <rect x="3" y="5" width="12" height="15" rx="2.5" />
+      <path d="M17 8h2.5A1.5 1.5 0 0 1 21 9.5V17a1.5 1.5 0 0 1-1.5 1.5H19" />
+      <path d="M8 11.5h2M8 14h4" />
+    </svg>
+  )
+}
+
+export function IconShuffle({ size = 16 }: Props) {
+  return (
+    <svg {...base(size)}>
+      <path d="M3 7h3.5l3 5m0 0 3 5H16m0 0-2-2m2 2-2 2" />
+      <path d="M3 17h3.5l3-5" />
+      <path d="M13 7h3m0 0-2-2m2 2-2 2" />
+    </svg>
+  )
+}
+
+export function IconTest({ size = 16 }: Props) {
+  return (
+    <svg {...base(size)}>
+      <path d="M5 4h14v16l-7-3.5L5 20V4Z" />
+    </svg>
+  )
+}
+
 export function IconTrash({ size = 15 }: Props) {
   return (
     <svg {...base(size)}>

@@ -3,28 +3,31 @@
 .topbar {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding-block: 0.5rem 1.5rem;
+  gap: 0.5rem;
+  padding-block: 0.4rem 1.35rem;
 }
 
 .brand {
   display: flex;
   align-items: baseline;
-  gap: 0.6rem;
+  gap: 0.55rem;
   margin-right: auto;
   min-width: 0;
 }
 
 .brand__mark {
   font-family: var(--serif);
-  font-size: 1.4rem;
+  font-size: 1.38rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .brand__sub {
-  font-size: 0.7rem;
+  font-size: 0.66rem;
   letter-spacing: 0.2em;
   color: var(--text-faint);
   text-transform: uppercase;
@@ -34,24 +37,19 @@
 .icon-btn {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 12px;
   color: var(--text-dim);
   border: 1px solid transparent;
-  transition: color 0.2s, background 0.2s, border-color 0.2s;
+  transition: color 0.18s, background 0.18s, border-color 0.18s;
 }
 
 .icon-btn:hover {
   color: var(--text);
   background: var(--surface-2);
   border-color: var(--line);
-}
-
-.icon-btn[aria-pressed='true'] {
-  color: var(--amber);
-  border-color: var(--amber-line);
-  background: var(--amber-soft);
 }
 
 /* ── ボタン ───────────────────────────────────────────── */
@@ -64,8 +62,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  padding: 0.62rem 1.05rem;
-  border-radius: var(--radius-sm);
+  min-height: 44px;
+  padding: 0.6rem 1.1rem;
+  border-radius: 12px;
   background: var(--btn-bg);
   color: var(--btn-fg);
   border: 1px solid var(--btn-line);
@@ -74,13 +73,13 @@
   letter-spacing: 0.03em;
   line-height: 1.3;
   white-space: nowrap;
-  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.25, 1), filter 0.2s, background 0.2s,
-    border-color 0.2s;
+  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.25, 1), filter 0.18s, background 0.18s,
+    border-color 0.18s, color 0.18s;
 }
 
 .btn:hover:not(:disabled) {
   transform: translateY(-1px);
-  filter: brightness(1.08);
+  filter: brightness(1.07);
 }
 
 .btn:active:not(:disabled) {
@@ -88,34 +87,28 @@
 }
 
 .btn:disabled {
-  opacity: 0.4;
+  opacity: 0.38;
   cursor: not-allowed;
 }
 
 .btn--primary {
-  --btn-bg: var(--amber);
-  --btn-fg: var(--amber-ink);
-  --btn-line: var(--amber);
+  --btn-bg: var(--primary);
+  --btn-fg: var(--primary-ink);
+  --btn-line: var(--primary);
   font-weight: 700;
   box-shadow: var(--shadow-1);
 }
 
-.btn--sage {
-  --btn-bg: var(--sage-soft);
-  --btn-fg: var(--sage);
-  --btn-line: var(--sage-line);
+.btn--mint {
+  --btn-bg: var(--mint-soft);
+  --btn-fg: var(--mint);
+  --btn-line: var(--mint-line);
 }
 
-.btn--amber {
-  --btn-bg: var(--amber-soft);
-  --btn-fg: var(--amber);
-  --btn-line: var(--amber-line);
-}
-
-.btn--slate {
-  --btn-bg: var(--slate-soft);
-  --btn-fg: var(--text-dim);
-  --btn-line: var(--slate-line);
+.btn--coral {
+  --btn-bg: var(--coral-soft);
+  --btn-fg: var(--coral);
+  --btn-line: var(--coral-line);
 }
 
 .btn--ghost {
@@ -124,15 +117,21 @@
   --btn-line: var(--line);
 }
 
+.btn--ghost:hover:not(:disabled) {
+  --btn-fg: var(--text);
+}
+
 .btn--danger {
   --btn-bg: transparent;
   --btn-fg: var(--danger);
-  --btn-line: color-mix(in srgb, var(--danger) 40%, transparent);
+  --btn-line: color-mix(in srgb, var(--danger) 38%, transparent);
 }
 
 .btn--sm {
-  padding: 0.42rem 0.75rem;
+  min-height: 36px;
+  padding: 0.35rem 0.8rem;
   font-size: 0.8rem;
+  border-radius: 9px;
 }
 
 .btn--block {
@@ -149,56 +148,56 @@
 }
 
 .section {
-  margin-bottom: 2.25rem;
+  margin-bottom: 2rem;
 }
 
 .section__head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.8rem;
 }
 
 .section__title {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--text-dim);
 }
 
 .section__rule {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, var(--line), transparent);
+  background: var(--line-soft);
 }
 
 /* ── 集計 ─────────────────────────────────────────────── */
 
 .overview {
-  padding: 1.4rem 1.4rem 1.25rem;
+  padding: 1.3rem 1.35rem 1.2rem;
 }
 
 .overview__total {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 0.45rem;
+  margin-bottom: 0.9rem;
 }
 
 .overview__total .num {
-  font-size: 2.6rem;
+  font-size: 2.5rem;
   line-height: 1;
   letter-spacing: -0.02em;
 }
 
 .overview__unit {
   color: var(--text-faint);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
 }
 
 .segbar {
   display: flex;
-  height: 8px;
+  height: 9px;
   border-radius: 999px;
   overflow: hidden;
   background: var(--surface-3);
@@ -214,27 +213,27 @@
 }
 
 .seg--known {
-  background: var(--sage);
+  background: var(--mint);
 }
 .seg--weak {
-  background: var(--amber);
+  background: var(--coral);
 }
 .seg--new {
-  background: var(--slate);
+  background: var(--steel);
 }
 
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 1.35rem;
-  margin-top: 0.95rem;
+  gap: 0.35rem 1.3rem;
+  margin-top: 0.9rem;
 }
 
 .legend__item {
   display: flex;
   align-items: baseline;
-  gap: 0.45rem;
-  font-size: 0.8rem;
+  gap: 0.42rem;
+  font-size: 0.79rem;
   color: var(--text-dim);
 }
 
@@ -257,11 +256,11 @@
 .actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.7rem;
-  margin: 1.1rem 0 2.25rem;
+  gap: 0.65rem;
+  margin: 1rem 0 2rem;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 460px) {
   .actions {
     grid-template-columns: 1fr;
   }
@@ -271,59 +270,65 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.15rem;
-  padding: 1.05rem 1.15rem;
+  gap: 0.1rem;
+  padding: 1.05rem 1.2rem;
   border-radius: var(--radius);
   border: 1px solid var(--line);
   background: var(--surface);
   text-align: left;
-  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.25, 1), border-color 0.2s, background 0.2s;
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.25, 1), border-color 0.18s, background 0.18s;
 }
 
 .action-tile:hover:not(:disabled) {
   transform: translateY(-2px);
-  border-color: var(--amber-line);
+  border-color: var(--text-faint);
 }
 
 .action-tile:disabled {
-  opacity: 0.45;
+  opacity: 0.42;
   cursor: not-allowed;
 }
 
 .action-tile--accent {
-  background: linear-gradient(160deg, var(--amber-soft), transparent 70%), var(--surface);
-  border-color: var(--amber-line);
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-ink);
+  box-shadow: var(--shadow-1);
+}
+
+.action-tile--accent:hover:not(:disabled) {
+  border-color: var(--primary);
 }
 
 .action-tile__title {
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-.action-tile--accent .action-tile__title {
-  color: var(--amber);
+  letter-spacing: 0.04em;
 }
 
 .action-tile__note {
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   color: var(--text-faint);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
+}
+
+.action-tile--accent .action-tile__note {
+  color: color-mix(in srgb, var(--primary-ink) 62%, transparent);
 }
 
 /* ── デッキ ───────────────────────────────────────────── */
 
 .deck-list {
   display: grid;
-  gap: 0.7rem;
+  gap: 0.6rem;
 }
 
 .deck {
-  padding: 1.05rem 1.15rem;
+  padding: 1rem 1.15rem;
   border-radius: var(--radius);
   border: 1px solid var(--line-soft);
   background: var(--surface);
-  transition: border-color 0.2s, transform 0.18s cubic-bezier(0.2, 0.8, 0.25, 1);
+  transition: border-color 0.18s, transform 0.18s cubic-bezier(0.2, 0.8, 0.25, 1);
 }
 
 .deck:hover {
@@ -335,7 +340,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.65rem;
 }
 
 .deck__name {
@@ -343,16 +348,16 @@
   min-width: 0;
   font-size: 0.98rem;
   font-weight: 500;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: color 0.2s;
+  transition: color 0.18s;
 }
 
 button.deck__name:hover {
-  color: var(--amber);
+  color: var(--mint);
 }
 
 .deck__count {
@@ -366,7 +371,7 @@ button.deck__name:hover {
 .deck__foot {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   margin-top: 0.8rem;
   flex-wrap: wrap;
 }
@@ -378,7 +383,7 @@ button.deck__name:hover {
 /* ── 空状態 ───────────────────────────────────────────── */
 
 .empty {
-  padding: 2.6rem 1.5rem;
+  padding: 2.4rem 1.5rem;
   text-align: center;
   border: 1px dashed var(--line);
   border-radius: var(--radius);
@@ -386,30 +391,30 @@ button.deck__name:hover {
 }
 
 .empty__title {
-  font-family: var(--serif);
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--text-dim);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
 }
 
 .empty__body {
-  font-size: 0.84rem;
+  font-size: 0.83rem;
   line-height: 1.9;
 }
 
-/* ── 取り込み ─────────────────────────────────────────── */
+/* ── 入力 ─────────────────────────────────────────────── */
 
 .field {
   display: block;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .field__label {
   display: block;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   letter-spacing: 0.12em;
   color: var(--text-dim);
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.4rem;
 }
 
 .input,
@@ -418,17 +423,17 @@ button.deck__name:hover {
   padding: 0.7rem 0.85rem;
   background: var(--bg-deep);
   border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
+  border-radius: 11px;
   color: var(--text);
   font-size: 0.92rem;
   line-height: 1.75;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.18s, background 0.18s;
 }
 
 .input:focus,
 .textarea:focus {
   outline: none;
-  border-color: var(--amber-line);
+  border-color: var(--mint-line);
   background: var(--surface);
 }
 
@@ -462,7 +467,10 @@ button.deck__name:hover {
   font-size: 0.76rem;
   line-height: 1.9;
   white-space: pre-wrap;
+  text-align: left;
 }
+
+/* ── 取り込みプレビュー ───────────────────────────────── */
 
 .preview {
   display: grid;
@@ -474,29 +482,29 @@ button.deck__name:hover {
   grid-template-columns: 1.5rem 1fr auto;
   align-items: start;
   gap: 0.7rem;
-  padding: 0.7rem 0.85rem;
-  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.8rem;
+  border-radius: 12px;
   border: 1px solid var(--line-soft);
   background: var(--surface);
 }
 
 .row--issue {
-  border-color: var(--amber-line);
-  background: linear-gradient(0deg, var(--amber-soft), var(--amber-soft)), var(--surface);
+  border-color: var(--coral-line);
+  background: linear-gradient(0deg, var(--coral-soft), var(--coral-soft)), var(--surface);
 }
 
 .row__index {
   font-family: var(--serif);
   font-size: 0.8rem;
   color: var(--text-faint);
-  padding-top: 0.15rem;
+  padding-top: 0.2rem;
   font-variant-numeric: tabular-nums;
 }
 
 .row__body {
   min-width: 0;
   display: grid;
-  gap: 0.3rem;
+  gap: 0.25rem;
 }
 
 .row__en,
@@ -504,16 +512,16 @@ button.deck__name:hover {
   width: 100%;
   padding: 0.25rem 0.4rem;
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: 7px;
   background: transparent;
   font-size: 0.88rem;
   line-height: 1.6;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.18s, background 0.18s;
 }
 
 .row__en {
   font-family: var(--serif);
-  font-size: 0.95rem;
+  font-size: 0.97rem;
 }
 
 .row__ja {
@@ -528,21 +536,24 @@ button.deck__name:hover {
 .row__en:focus,
 .row__ja:focus {
   outline: none;
-  border-color: var(--amber-line);
+  border-color: var(--mint-line);
   background: var(--bg-deep);
 }
 
 .row__en::placeholder,
 .row__ja::placeholder {
-  color: var(--danger);
-  opacity: 0.7;
+  color: var(--coral);
+  opacity: 0.75;
 }
 
 .row__drop {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
   color: var(--text-faint);
-  padding: 0.2rem 0.35rem;
-  border-radius: 6px;
-  transition: color 0.2s, background 0.2s;
+  transition: color 0.18s, background 0.18s;
 }
 
 .row__drop:hover {
@@ -555,7 +566,7 @@ button.deck__name:hover {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem 1rem;
-  margin-bottom: 0.9rem;
+  margin-bottom: 0.85rem;
   font-size: 0.82rem;
   color: var(--text-dim);
 }
@@ -563,67 +574,81 @@ button.deck__name:hover {
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.15rem 0.55rem;
+  gap: 0.3rem;
+  padding: 0.16rem 0.6rem;
   border-radius: 999px;
-  font-size: 0.74rem;
-  letter-spacing: 0.05em;
+  font-size: 0.73rem;
+  letter-spacing: 0.04em;
   border: 1px solid var(--line);
   color: var(--text-dim);
 }
 
 .tag--warn {
-  color: var(--amber);
-  border-color: var(--amber-line);
-  background: var(--amber-soft);
-}
-
-.tag--known {
-  color: var(--sage);
-  border-color: var(--sage-line);
-  background: var(--sage-soft);
-}
-
-.tag--weak {
-  color: var(--amber);
-  border-color: var(--amber-line);
-  background: var(--amber-soft);
-}
-
-.tag--new {
-  color: var(--text-dim);
-  border-color: var(--slate-line);
-  background: var(--slate-soft);
+  color: var(--coral);
+  border-color: var(--coral-line);
+  background: var(--coral-soft);
 }
 
 .sticky-foot {
   position: sticky;
   bottom: 0;
   display: flex;
-  gap: 0.6rem;
-  padding: 0.9rem 0 1.1rem;
-  margin-top: 1.2rem;
+  gap: 0.55rem;
+  padding: 0.85rem 0 1rem;
+  margin-top: 1.1rem;
   background: linear-gradient(180deg, transparent, var(--bg) 35%);
 }
 
-/* ── デッキ詳細 ───────────────────────────────────────── */
+/* ── 切替タブ ─────────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  border-radius: 13px;
+  background: var(--surface-2);
+  border: 1px solid var(--line-soft);
+  margin-bottom: 0.9rem;
+}
+
+.tabs button {
+  flex: 1;
+  min-height: 38px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  transition: color 0.18s, background 0.18s, box-shadow 0.18s;
+}
+
+.tabs button:hover {
+  color: var(--text);
+}
+
+.tabs button[aria-selected='true'] {
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
 
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 1rem;
+  gap: 0.35rem;
+  margin-bottom: 0.9rem;
 }
 
 .chip {
-  padding: 0.34rem 0.8rem;
+  min-height: 34px;
+  padding: 0.25rem 0.8rem;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: transparent;
   color: var(--text-dim);
-  font-size: 0.79rem;
-  letter-spacing: 0.05em;
-  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  transition: color 0.18s, border-color 0.18s, background 0.18s;
 }
 
 .chip:hover {
@@ -632,23 +657,187 @@ button.deck__name:hover {
 }
 
 .chip[aria-pressed='true'] {
-  color: var(--amber);
-  border-color: var(--amber-line);
-  background: var(--amber-soft);
+  color: var(--primary-ink);
+  border-color: var(--primary);
+  background: var(--primary);
 }
+
+/* ── カード盤面 ───────────────────────────────────────── */
+
+.board-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+
+.board-bar__note {
+  font-size: 0.74rem;
+  color: var(--text-faint);
+  letter-spacing: 0.06em;
+  margin-left: auto;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  gap: 0.6rem;
+}
+
+.tile {
+  perspective: 1200px;
+  height: 9.5rem;
+  position: relative;
+}
+
+.tile__inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.3, 0.9, 0.25, 1);
+}
+
+.tile.is-flipped .tile__inner {
+  transform: rotateY(180deg);
+}
+
+.tile__face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.18s;
+}
+
+.tile__face--back {
+  transform: rotateY(180deg);
+  background: var(--surface-2);
+}
+
+.tile:hover .tile__face {
+  border-color: var(--text-faint);
+}
+
+.tile__text {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.1rem 1.1rem 0.5rem;
+  text-align: center;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  overflow: auto;
+}
+
+.tile__text.en {
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.tile__foot {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.7rem 0.6rem;
+  min-height: 2rem;
+}
+
+.tile__mark {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.tile__side {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.tile__spacer {
+  flex: 1;
+}
+
+.tile__hint {
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  opacity: 0.85;
+}
+
+/* ── 状態の 3 択 ──────────────────────────────────────── */
+
+.status-pick {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+
+.status-pick button {
+  min-height: 26px;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.71rem;
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+  transition: color 0.18s, background 0.18s;
+}
+
+.status-pick button:hover {
+  color: var(--text);
+  background: var(--surface-3);
+}
+
+.status-pick button[aria-pressed='true'][data-status='known'] {
+  color: var(--mint-ink);
+  background: var(--mint);
+}
+.status-pick button[aria-pressed='true'][data-status='weak'] {
+  color: var(--coral-ink);
+  background: var(--coral);
+}
+.status-pick button[aria-pressed='true'][data-status='new'] {
+  color: var(--text);
+  background: var(--surface-3);
+}
+
+/* ── 一覧 ─────────────────────────────────────────────── */
 
 .entry {
   padding: 0.85rem 1rem;
-  border-radius: var(--radius-sm);
+  border-radius: 13px;
   border: 1px solid var(--line-soft);
   background: var(--surface);
   display: grid;
-  gap: 0.55rem;
+  gap: 0.5rem;
+  border-left: 3px solid var(--steel);
+}
+
+.entry[data-status='known'] {
+  border-left-color: var(--mint);
+}
+.entry[data-status='weak'] {
+  border-left-color: var(--coral);
 }
 
 .entry__en {
   font-family: var(--serif);
-  font-size: 1.02rem;
+  font-size: 1.05rem;
   line-height: 1.55;
 }
 
@@ -661,7 +850,7 @@ button.deck__name:hover {
 .entry__foot {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   flex-wrap: wrap;
 }
 
@@ -669,62 +858,29 @@ button.deck__name:hover {
   flex: 1;
 }
 
-.status-pick {
-  display: inline-flex;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.status-pick button {
-  padding: 0.24rem 0.66rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-  color: var(--text-faint);
-  transition: color 0.2s, background 0.2s;
-}
-
-.status-pick button:hover {
-  color: var(--text);
-  background: var(--surface-3);
-}
-
-.status-pick button[aria-pressed='true'][data-status='known'] {
-  color: var(--sage-ink);
-  background: var(--sage);
-}
-.status-pick button[aria-pressed='true'][data-status='weak'] {
-  color: var(--amber-ink);
-  background: var(--amber);
-}
-.status-pick button[aria-pressed='true'][data-status='new'] {
-  color: var(--text);
-  background: var(--surface-3);
-}
-
-/* ── 学習 ─────────────────────────────────────────────── */
+/* ── 学習（1 枚ずつのテスト） ─────────────────────────── */
 
 .study {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  width: min(100% - 2rem, var(--measure));
+  width: min(100% - 2rem, 44rem);
   margin-inline: auto;
-  padding-block: 1rem 1.5rem;
+  padding-block: 0.9rem 1.4rem;
 }
 
 .study__bar {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 0.6rem;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
 }
 
 .study__title {
   flex: 1;
   min-width: 0;
   font-size: 0.8rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--text-dim);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -733,22 +889,22 @@ button.deck__name:hover {
 
 .study__count {
   font-family: var(--serif);
-  font-size: 0.85rem;
+  font-size: 0.86rem;
   color: var(--text-faint);
   font-variant-numeric: tabular-nums;
 }
 
 .progress {
-  height: 2px;
+  height: 3px;
   background: var(--line-soft);
   border-radius: 999px;
   overflow: hidden;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.5rem;
 }
 
 .progress__fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--amber), var(--sage));
+  background: var(--mint);
   transition: width 0.45s cubic-bezier(0.2, 0.8, 0.25, 1);
 }
 
@@ -757,12 +913,12 @@ button.deck__name:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1.4rem;
+  gap: 1.3rem;
 }
 
 .flip {
   perspective: 1800px;
-  min-height: clamp(19rem, 46vh, 26rem);
+  min-height: clamp(18rem, 44vh, 24rem);
   position: relative;
 }
 
@@ -770,7 +926,7 @@ button.deck__name:hover {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.3, 0.9, 0.25, 1);
+  transition: transform 0.55s cubic-bezier(0.3, 0.9, 0.25, 1);
 }
 
 .flip.is-revealed .flip__inner {
@@ -783,11 +939,11 @@ button.deck__name:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.9rem;
   padding: 2rem 1.75rem;
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
-  background: linear-gradient(165deg, var(--surface-2), var(--surface) 55%);
+  background: var(--surface);
   box-shadow: var(--shadow-card);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -798,30 +954,29 @@ button.deck__name:hover {
 
 .face--back {
   transform: rotateY(180deg);
-  background: linear-gradient(165deg, var(--surface-2), var(--surface) 55%);
-  border-color: var(--amber-line);
+  background: var(--surface-2);
+  border-color: var(--mint-line);
 }
 
 .face__label {
-  font-size: 0.66rem;
-  letter-spacing: 0.24em;
+  font-size: 0.64rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--text-faint);
 }
 
 .face__prompt {
   font-size: clamp(1.15rem, 4.4vw, 1.55rem);
-  line-height: 1.85;
-  letter-spacing: 0.03em;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
   font-weight: 500;
 }
 
 .face__answer {
   font-family: var(--serif);
   font-size: clamp(1.3rem, 5vw, 1.85rem);
-  line-height: 1.6;
+  line-height: 1.55;
   font-weight: 400;
-  letter-spacing: 0.005em;
 }
 
 .face__echo {
@@ -834,11 +989,11 @@ button.deck__name:hover {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 1.15rem;
+  bottom: 1.1rem;
   font-size: 0.7rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   color: var(--text-faint);
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 .speak-btn {
@@ -846,26 +1001,27 @@ button.deck__name:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.35rem 0.85rem;
+  min-height: 36px;
+  padding: 0.3rem 0.9rem;
   border-radius: 999px;
   border: 1px solid var(--line);
   color: var(--text-dim);
   font-size: 0.76rem;
-  letter-spacing: 0.06em;
-  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  letter-spacing: 0.05em;
+  transition: color 0.18s, border-color 0.18s, background 0.18s;
 }
 
 .speak-btn:hover {
-  color: var(--amber);
-  border-color: var(--amber-line);
-  background: var(--amber-soft);
+  color: var(--mint);
+  border-color: var(--mint-line);
+  background: var(--mint-soft);
 }
 
 .grades {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem;
-  min-height: 4.6rem;
+  gap: 0.55rem;
+  min-height: 4.4rem;
 }
 
 .grade {
@@ -873,13 +1029,13 @@ button.deck__name:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.2rem;
-  padding: 0.85rem 0.5rem;
-  border-radius: var(--radius);
+  gap: 0.15rem;
+  padding: 0.8rem 0.5rem;
+  border-radius: 14px;
   border: 1px solid var(--line);
   background: var(--surface);
-  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.25, 1), border-color 0.2s, background 0.2s,
-    color 0.2s;
+  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.25, 1), border-color 0.18s, background 0.18s,
+    color 0.18s;
 }
 
 .grade:hover {
@@ -887,67 +1043,66 @@ button.deck__name:hover {
 }
 
 .grade__label {
-  font-size: 0.95rem;
+  font-size: 0.94rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
 }
 
 .grade__key {
   font-family: var(--serif);
-  font-size: 0.68rem;
+  font-size: 0.67rem;
   color: var(--text-faint);
   letter-spacing: 0.1em;
 }
 
 .grade--new:hover {
-  border-color: var(--slate-line);
-  background: var(--slate-soft);
-  color: var(--text);
+  border-color: var(--steel-line);
+  background: var(--steel-soft);
 }
 .grade--weak:hover {
-  border-color: var(--amber-line);
-  background: var(--amber-soft);
-  color: var(--amber);
+  border-color: var(--coral-line);
+  background: var(--coral-soft);
+  color: var(--coral);
 }
 .grade--known:hover {
-  border-color: var(--sage-line);
-  background: var(--sage-soft);
-  color: var(--sage);
+  border-color: var(--mint-line);
+  background: var(--mint-soft);
+  color: var(--mint);
 }
 
 .reveal-cue {
   display: grid;
   place-items: center;
-  min-height: 4.6rem;
+  min-height: 4.4rem;
   color: var(--text-faint);
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
+  font-size: 0.77rem;
+  letter-spacing: 0.12em;
 }
 
 /* ── 結果 ─────────────────────────────────────────────── */
 
 .result {
   display: grid;
-  gap: 1.4rem;
-  padding: 2.2rem 1.6rem;
+  gap: 1.3rem;
+  padding: 2.1rem 1.5rem;
   text-align: center;
 }
 
 .result__title {
   font-family: var(--serif);
-  font-size: 1.5rem;
-  letter-spacing: 0.08em;
+  font-size: 1.45rem;
+  letter-spacing: 0.04em;
 }
 
 .result__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem;
+  gap: 0.55rem;
 }
 
 .result__cell {
-  padding: 0.9rem 0.4rem;
-  border-radius: var(--radius-sm);
+  padding: 0.85rem 0.4rem;
+  border-radius: 12px;
   border: 1px solid var(--line-soft);
   background: var(--surface-2);
 }
@@ -955,20 +1110,20 @@ button.deck__name:hover {
 .result__num {
   display: block;
   font-family: var(--serif);
-  font-size: 1.7rem;
+  font-size: 1.65rem;
   line-height: 1.2;
   font-variant-numeric: tabular-nums;
 }
 
 .result__cap {
-  font-size: 0.72rem;
+  font-size: 0.71rem;
   letter-spacing: 0.1em;
   color: var(--text-faint);
 }
 
 .result__actions {
   display: grid;
-  gap: 0.55rem;
+  gap: 0.5rem;
 }
 
 /* ── 設定 ─────────────────────────────────────────────── */
@@ -976,9 +1131,10 @@ button.deck__name:hover {
 .setting {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.85rem;
   padding: 0.85rem 1.1rem;
   border-bottom: 1px solid var(--line-soft);
+  flex-wrap: wrap;
 }
 
 .setting:last-child {
@@ -987,12 +1143,12 @@ button.deck__name:hover {
 
 .setting__text {
   flex: 1;
-  min-width: 0;
+  min-width: 12rem;
 }
 
 .setting__title {
   font-size: 0.88rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
 }
 
 .setting__note {
@@ -1003,12 +1159,12 @@ button.deck__name:hover {
 
 .switch {
   position: relative;
-  width: 44px;
-  height: 25px;
+  width: 46px;
+  height: 27px;
   border-radius: 999px;
   background: var(--surface-3);
   border: 1px solid var(--line);
-  transition: background 0.25s, border-color 0.25s;
+  transition: background 0.22s, border-color 0.22s;
   flex-shrink: 0;
 }
 
@@ -1017,27 +1173,27 @@ button.deck__name:hover {
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 19px;
-  height: 19px;
+  width: 21px;
+  height: 21px;
   border-radius: 999px;
   background: var(--text-faint);
-  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.25, 1), background 0.25s;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.25, 1), background 0.22s;
 }
 
 .switch[aria-checked='true'] {
-  background: var(--amber-soft);
-  border-color: var(--amber-line);
+  background: var(--mint-soft);
+  border-color: var(--mint-line);
 }
 
 .switch[aria-checked='true']::after {
   transform: translateX(19px);
-  background: var(--amber);
+  background: var(--mint);
 }
 
 .toast {
   position: fixed;
   left: 50%;
-  bottom: 1.6rem;
+  bottom: 1.5rem;
   transform: translateX(-50%);
   z-index: 20;
   padding: 0.6rem 1.1rem;
@@ -1046,6 +1202,6 @@ button.deck__name:hover {
   border: 1px solid var(--line);
   box-shadow: var(--shadow-2);
   font-size: 0.82rem;
-  letter-spacing: 0.04em;
-  animation: rise 0.3s cubic-bezier(0.2, 0.8, 0.25, 1);
+  letter-spacing: 0.03em;
+  animation: rise 0.28s cubic-bezier(0.2, 0.8, 0.25, 1);
 }
