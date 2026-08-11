@@ -57,6 +57,13 @@ export function DeckView({
     [cards, filter],
   )
 
+  // 通し番号は取り込んだ順で固定する。絞り込んでも同じ英文が同じ番号のままになる。
+  const numberOf = useMemo(() => {
+    const map = new Map<string, number>()
+    cards.forEach((card, index) => map.set(card.id, index + 1))
+    return map
+  }, [cards])
+
   const commitRename = () => {
     setRenaming(false)
     if (draftName.trim() && draftName !== deck.name) onRename(deck.id, draftName)
@@ -181,6 +188,7 @@ export function DeckView({
                 <CardEditor
                   key={card.id}
                   card={card}
+                  number={numberOf.get(card.id) ?? 0}
                   onCancel={() => setEditingId(null)}
                   onSave={(en, ja) => {
                     onEditCard(card.id, en, ja)
@@ -189,38 +197,43 @@ export function DeckView({
                 />
               ) : (
                 <article key={card.id} className="entry" data-status={card.status}>
-                  <p className="entry__en en">{card.en}</p>
-                  <p className="entry__ja">{card.ja}</p>
-                  <div className="entry__foot">
-                    <div className="status-pick">
-                      {(['new', 'weak', 'known'] as Status[]).map((status) => (
-                        <button
-                          key={status}
-                          data-status={status}
-                          aria-pressed={card.status === status}
-                          onClick={() => onSetStatus(card.id, status)}
-                        >
-                          {STATUS_LABEL[status]}
-                        </button>
-                      ))}
+                  <span className="entry__no num">{numberOf.get(card.id)}</span>
+                  <div className="entry__body">
+                    <p className="entry__en en">{card.en}</p>
+                    <p className="entry__ja">{card.ja}</p>
+                    <div className="entry__foot">
+                      <div className="status-pick">
+                        {(['new', 'weak', 'known'] as Status[]).map((status) => (
+                          <button
+                            key={status}
+                            data-status={status}
+                            aria-pressed={card.status === status}
+                            onClick={() => onSetStatus(card.id, status)}
+                          >
+                            {STATUS_LABEL[status]}
+                          </button>
+                        ))}
+                      </div>
+                      <span className="entry__spacer" />
+                      <button
+                        className="row__drop"
+                        onClick={() => setEditingId(card.id)}
+                        aria-label={`${numberOf.get(card.id)} 番のカードを編集`}
+                      >
+                        <IconPencil />
+                      </button>
+                      <button
+                        className="row__drop"
+                        onClick={() => {
+                          if (window.confirm(`${numberOf.get(card.id)} 番のカードを削除しますか。`)) {
+                            onDeleteCard(card.id)
+                          }
+                        }}
+                        aria-label={`${numberOf.get(card.id)} 番のカードを削除`}
+                      >
+                        <IconTrash />
+                      </button>
                     </div>
-                    <span className="entry__spacer" />
-                    <button
-                      className="row__drop"
-                      onClick={() => setEditingId(card.id)}
-                      aria-label="このカードを編集"
-                    >
-                      <IconPencil />
-                    </button>
-                    <button
-                      className="row__drop"
-                      onClick={() => {
-                        if (window.confirm('このカードを削除しますか。')) onDeleteCard(card.id)
-                      }}
-                      aria-label="このカードを削除"
-                    >
-                      <IconTrash />
-                    </button>
                   </div>
                 </article>
               ),
@@ -264,10 +277,12 @@ export function DeckView({
 
 function CardEditor({
   card,
+  number,
   onSave,
   onCancel,
 }: {
   card: Card
+  number: number
   onSave: (en: string, ja: string) => void
   onCancel: () => void
 }) {
@@ -276,31 +291,34 @@ function CardEditor({
 
   return (
     <div className="entry" data-status={card.status}>
-      <input
-        className="row__en"
-        value={en}
-        onChange={(event) => setEn(event.target.value)}
-        aria-label="英文"
-        spellCheck={false}
-        autoFocus
-      />
-      <input
-        className="row__ja"
-        value={ja}
-        onChange={(event) => setJa(event.target.value)}
-        aria-label="日本語訳"
-      />
-      <div className="entry__foot">
-        <button
-          className="btn btn--sm btn--primary"
-          onClick={() => onSave(en, ja)}
-          disabled={!en.trim() || !ja.trim()}
-        >
-          保存
-        </button>
-        <button className="btn btn--sm btn--ghost" onClick={onCancel}>
-          取消
-        </button>
+      <span className="entry__no num">{number}</span>
+      <div className="entry__body">
+        <input
+          className="row__en"
+          value={en}
+          onChange={(event) => setEn(event.target.value)}
+          aria-label={`${number} 番の英文`}
+          spellCheck={false}
+          autoFocus
+        />
+        <input
+          className="row__ja"
+          value={ja}
+          onChange={(event) => setJa(event.target.value)}
+          aria-label={`${number} 番の日本語訳`}
+        />
+        <div className="entry__foot">
+          <button
+            className="btn btn--sm btn--primary"
+            onClick={() => onSave(en, ja)}
+            disabled={!en.trim() || !ja.trim()}
+          >
+            保存
+          </button>
+          <button className="btn btn--sm btn--ghost" onClick={onCancel}>
+            取消
+          </button>
+        </div>
       </div>
     </div>
   )

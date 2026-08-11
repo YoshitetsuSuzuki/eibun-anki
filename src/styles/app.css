@@ -824,8 +824,24 @@ button.deck__name:hover {
   border: 1px solid var(--line-soft);
   background: var(--surface);
   display: grid;
-  gap: 0.5rem;
+  grid-template-columns: 1.9rem 1fr;
+  align-items: start;
+  gap: 0.7rem;
   border-left: 3px solid var(--steel);
+}
+
+.entry__no {
+  font-size: 0.85rem;
+  line-height: 1.85;
+  color: var(--text-faint);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.entry__body {
+  min-width: 0;
+  display: grid;
+  gap: 0.5rem;
 }
 
 .entry[data-status='known'] {
