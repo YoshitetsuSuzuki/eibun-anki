@@ -1,5 +1,5 @@
 // アプリアイコンを生成する。外部ライブラリを足さずに済むよう PNG は自前で書き出す。
-// 図案: 夜の紙に重なった 2 枚の暗記カード。手前の琥珀色の札に 3 本の行。
+// 図案: グラファイトの地に重なった 2 枚の暗記カード。手前は白い札、奥はミント。
 import { deflateSync } from 'node:zlib'
 import { writeFileSync, mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
@@ -7,10 +7,10 @@ import { fileURLToPath } from 'node:url'
 
 const OUT_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', 'public')
 
-const BG = [0x12, 0x14, 0x1a]
-const AMBER = [0xe3, 0xa7, 0x5b]
-const SAGE = [0x7f, 0xbf, 0xa3]
-const INK = [0x1a, 0x12, 0x06]
+const BG = [0x1b, 0x20, 0x29]
+const PAPER = [0xee, 0xf2, 0xf9]
+const MINT = [0x4f, 0xd1, 0xa5]
+const INK = [0x1b, 0x20, 0x29]
 
 /** 中心・回転を持つ座標系。カード内の要素はこの中で位置を決める。 */
 function frame(cx, cy, deg) {
@@ -54,20 +54,20 @@ function buildShapes(size, inset) {
     // 上方向からの淡い灯り
     const gx = (x - c) / s
     const gy = (y - 0.05 * s) / s
-    const glow = Math.max(0, 1 - Math.hypot(gx, gy) / 0.62) ** 2 * 0.16
-    color = mix(color, AMBER, glow)
+    const glow = Math.max(0, 1 - Math.hypot(gx, gy) / 0.62) ** 2 * 0.14
+    color = mix(color, PAPER, glow)
 
     const [bx, by] = back(x, y)
     if (roundedRectHit(bx, by, backCard.w, backCard.h, backCard.r)) {
-      color = mix(color, SAGE, 0.62)
+      color = mix(color, MINT, 0.72)
     }
 
     const [fx, fy] = front(x, y)
     if (roundedRectHit(fx, fy, frontCard.w, frontCard.h, frontCard.r)) {
-      color = AMBER
+      color = PAPER
       for (const line of lines) {
         if (roundedRectHit(fx, fy - line.y, line.w, lineH, lineH / 2)) {
-          color = mix(AMBER, INK, 0.88)
+          color = mix(PAPER, INK, 0.86)
         }
       }
     }

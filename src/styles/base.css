@@ -189,15 +189,18 @@ button {
 
 /* ── 骨格 ───────────────────────────────────────────── */
 
+/* ホーム画面から起動したときに、ノッチやホームバーへ内容が潜り込まないようにする。
+   ブラウザ表示では env(...) が 0 になるため、見た目は変わらない。 */
 #root {
   position: relative;
   z-index: 1;
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
 }
 
 .shell {
   width: min(100% - 2rem, var(--measure));
   margin-inline: auto;
-  padding-block: 1.1rem 5rem;
+  padding-block: calc(1.1rem + env(safe-area-inset-top)) calc(5rem + env(safe-area-inset-bottom));
 }
 
 @media (max-width: 480px) {

@@ -594,7 +594,7 @@ button.deck__name:hover {
   bottom: 0;
   display: flex;
   gap: 0.55rem;
-  padding: 0.85rem 0 1rem;
+  padding: 0.85rem 0 calc(1rem + env(safe-area-inset-bottom));
   margin-top: 1.1rem;
   background: linear-gradient(180deg, transparent, var(--bg) 35%);
 }
@@ -882,7 +882,7 @@ button.deck__name:hover {
   min-height: 100dvh;
   width: min(100% - 2rem, 44rem);
   margin-inline: auto;
-  padding-block: 0.9rem 1.4rem;
+  padding-block: calc(0.9rem + env(safe-area-inset-top)) calc(1.4rem + env(safe-area-inset-bottom));
 }
 
 .study__bar {
@@ -1209,7 +1209,7 @@ button.deck__name:hover {
 .toast {
   position: fixed;
   left: 50%;
-  bottom: 1.5rem;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom));
   transform: translateX(-50%);
   z-index: 20;
   padding: 0.6rem 1.1rem;
