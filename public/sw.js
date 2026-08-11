@@ -1,5 +1,7 @@
-// 最小限のオフライン対応。取得できたものを溜め、次回は即座に返しつつ裏で更新する。
-const CACHE = 'eibun-anki-v1'
+// 最小限のオフライン対応。
+// ページ本体は「まず通信、駄目ならキャッシュ」。更新が次の訪問に持ち越されないようにするため。
+// アセットはファイル名にハッシュが付くので、キャッシュを優先しつつ裏で拾い直す。
+const CACHE = 'eibun-anki-v2'
 const INDEX = new URL('./', self.location).href
 
 self.addEventListener('install', (event) => {
@@ -26,28 +28,35 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return
   if (new URL(request.url).origin !== self.location.origin) return
 
-  event.respondWith(
-    (async () => {
-      const cache = await caches.open(CACHE)
-      const cached = await cache.match(request)
-
-      const network = fetch(request)
-        .then((response) => {
-          if (response.ok) cache.put(request, response.clone())
-          return response
-        })
-        .catch(() => null)
-
-      if (cached) return cached
-
-      const fresh = await network
-      if (fresh) return fresh
-
-      if (request.mode === 'navigate') {
-        const fallback = await cache.match(INDEX)
-        if (fallback) return fallback
-      }
-      return new Response('offline', { status: 503, statusText: 'offline' })
-    })(),
-  )
+  event.respondWith(request.mode === 'navigate' ? networkFirst(request) : cacheFirst(request))
 })
+
+async function networkFirst(request) {
+  const cache = await caches.open(CACHE)
+  try {
+    const response = await fetch(request)
+    if (response.ok) cache.put(request, response.clone())
+    return response
+  } catch {
+    return (await cache.match(request)) ?? (await cache.match(INDEX)) ?? offline()
+  }
+}
+
+async function cacheFirst(request) {
+  const cache = await caches.open(CACHE)
+  const cached = await cache.match(request)
+
+  const network = fetch(request)
+    .then((response) => {
+      if (response.ok) cache.put(request, response.clone())
+      return response
+    })
+    .catch(() => null)
+
+  if (cached) return cached
+  return (await network) ?? offline()
+}
+
+function offline() {
+  return new Response('offline', { status: 503, statusText: 'offline' })
+}
